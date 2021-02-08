@@ -15,8 +15,7 @@ class CommonService extends Service {
         isDelete: 0,
       },
     })
-    console.log(result)
-    console.log(result.get('password'))
+
     return result
   }
 }

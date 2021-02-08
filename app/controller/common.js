@@ -38,6 +38,9 @@ class CommonController extends Controller {
     if (!result) {
       return ctx.throw(500, '用户不存在')
     } else {
+      console.log('测试测试Login')
+      console.log(result)
+      console.log(result.get('password'))
       let checkPwd = await ctx.compare(query.password, result.get('password')) // 对比两次密码是否一致
       if (!checkPwd) {
         return ctx.throw(500, '用户名或密码错误')

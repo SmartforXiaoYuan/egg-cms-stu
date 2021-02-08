@@ -18,6 +18,17 @@ class MenuController extends Controller {
     ctx.returnBody(result, 100010)
   }
 
+  // {
+  //   "parentId": 0,
+  //   "title": "undefined",
+  //   "icon": "undefined",
+  //   "menuType": "M",
+  //   "orderNum": 1,
+  //   "isFrame": "1",
+  //   "visible": "1",
+  //   "status": "1"
+  // }
+
   // 新增
   async create() {
     const { ctx, service } = this
@@ -29,9 +40,7 @@ class MenuController extends Controller {
     let query = ctx.request.body
     query.createdAt = new Date()
     query.createdBy = ctx.state.user.userName
-    const result = await service[this.app.config.public].admin[this.modleName][
-      this.serviceName
-    ].create(query)
+    const result = await service.menu.create(query)
     if (result) {
       ctx.returnBody(null, 100020)
     } else {
@@ -39,24 +48,27 @@ class MenuController extends Controller {
     }
   }
 
-  //   // 修改
-  //   async update() {
-  //     const {ctx, service} = this;
-  //     let validateResult = await ctx.checkValidate(ctx.request.body, this.serviceName + '.update')
-  //     if (!validateResult) return
-  //     let query = ctx.request.body
-  //     query.updatedAt = new Date()
-  //     query.updatedBy = ctx.state.user.userName
-  //     const id = this.ctx.helper.parseInt(ctx.params.id);
-  //     const result = await service[this.app.config.public].admin[this.modleName][this.serviceName].update(query, {
-  //       id
-  //     });
-  //     if (result) {
-  //       ctx.returnBody(null, 100030);
-  //     } else {
-  //       ctx.returnBody(null, 100031, 500);
-  //     }
-  //   }
+  // 修改
+  async update() {
+    const { ctx, service } = this
+    let validateResult = await ctx.checkValidate(
+      ctx.request.body,
+      this.serviceName + '.update'
+    )
+    if (!validateResult) return
+    let query = ctx.request.body
+    query.updatedAt = new Date()
+    query.updatedBy = ctx.state.user.userName
+    const id = this.ctx.helper.parseInt(ctx.params.id)
+    const result = await service.menu.update(query, {
+      id,
+    })
+    if (result) {
+      ctx.returnBody(null, 100030)
+    } else {
+      ctx.returnBody(null, 100031, 500)
+    }
+  }
 
   //   // 删除
   //   async destroy() {
