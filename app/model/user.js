@@ -10,7 +10,6 @@ module.exports = (app) => {
       id: { type: INTEGER, primaryKey: true, autoIncrement: true },
       userName: {
         allowNull: false,
-        unique: true,
         type: STRING(50),
         comment: '用户名',
       },
@@ -35,7 +34,7 @@ module.exports = (app) => {
         comment: '邮箱',
       },
       isDelete: {
-        type: STRING,
+        type: INTEGER,
         defaultValue: '0',
         comment: '删除标志（0代表存在 1代表删除）',
       },

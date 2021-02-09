@@ -77,9 +77,7 @@ class CommonController extends Controller {
   // 验证码
   async captcha() {
     const { ctx, service } = this
-    let captcha = await service[
-      this.app.config.public
-    ].admin.system.common.captcha() // 服务里面的方法
+    let captcha = await service.common.captcha() // 服务里面的方法
     ctx.response.type = 'image/svg+xml' // 知道你个返回的类型
     ctx.body = captcha.data // 返回一张图片
   }

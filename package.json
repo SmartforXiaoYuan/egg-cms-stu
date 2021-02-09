@@ -17,7 +17,8 @@
     "egg-validate-plus": "^1.1.6",
     "graphql": "^15.5.0",
     "jsonwebtoken": "^8.5.1",
-    "mysql2": "^2.2.5"
+    "mysql2": "^2.2.5",
+    "svg-captcha": "^1.4.0"
   },
   "devDependencies": {
     "autod": "^3.0.1",

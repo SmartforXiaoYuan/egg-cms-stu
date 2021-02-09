@@ -32,5 +32,6 @@ module.exports = (app) => {
 
   router.post('/user/list', controller.user.list)
   router.post('/user', controller.user.ctreat)
-  router.post('/login', controller.common.login)
+  router.post('/api/login', controller.common.login)
+  router.get('/api/captcha', controller.common.captcha)
 }
