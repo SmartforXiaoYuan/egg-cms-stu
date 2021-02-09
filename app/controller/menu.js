@@ -70,20 +70,20 @@ class MenuController extends Controller {
     }
   }
 
-  //   // 删除
-  //   async destroy() {
-  //     const {ctx, service} = this;
-  //     let validateResult = await ctx.checkValidate(ctx.params, 'base.destroy')
-  //     if (!validateResult) return
-  //     const ids = ctx.params.id.split(',');
-  //     const result = await service[this.app.config.public].admin[this.modleName][this.serviceName].destroy(ids);
+  // 删除
+  async destroy() {
+    const { ctx, service } = this;
+    let validateResult = await ctx.checkValidate(ctx.params, 'base.destroy')
+    if (!validateResult) return
+    const ids = ctx.params.id.split(',');
+    const result = await service.menu.destroy(ids);
 
-  //     if (result) {
-  //       ctx.returnBody(null, 100040);
-  //     } else {
-  //       ctx.returnBody(null, 100041, 500);
-  //     }
-  //   }
+    if (result) {
+      ctx.returnBody(null, 100040);
+    } else {
+      ctx.returnBody(null, 100041, 500);
+    }
+  }
 }
 
 module.exports = MenuController
