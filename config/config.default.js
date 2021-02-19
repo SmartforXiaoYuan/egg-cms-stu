@@ -25,12 +25,11 @@ module.exports = (appInfo) => {
   const userConfig = {
     // myAppName: 'egg',
   }
-  config.api = 'http://www.phonegap100.com/'
+  // config.api = 'http://www.phonegap100.com/'
 
   const data = fs.readFileSync('E:/NodeDbConfig.json')
   let res = data.toString()
   const mysqldb = JSON.parse(res)
-  console.log('测试-config')
 
   config.sequelize = {
     dialect: 'mysql', // 表示使用mysql

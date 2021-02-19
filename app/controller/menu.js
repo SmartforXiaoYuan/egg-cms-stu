@@ -7,6 +7,14 @@ class MenuController extends Controller {
     super(...arg)
     this.serviceName = 'menu'
   }
+
+  // 查询
+  async index() {
+    const { ctx, service } = this
+    const result = await service.menu.findAllMenu()
+    ctx.returnBody(result, 100010)
+  }
+
   // 查询单个
   async show() {
     console.log(this.serviceName + '.create')
@@ -72,16 +80,16 @@ class MenuController extends Controller {
 
   // 删除
   async destroy() {
-    const { ctx, service } = this;
+    const { ctx, service } = this
     let validateResult = await ctx.checkValidate(ctx.params, 'base.destroy')
     if (!validateResult) return
-    const ids = ctx.params.id.split(',');
-    const result = await service.menu.destroy(ids);
+    const ids = ctx.params.id.split(',')
+    const result = await service.menu.destroy(ids)
 
     if (result) {
-      ctx.returnBody(null, 100040);
+      ctx.returnBody(null, 100040)
     } else {
-      ctx.returnBody(null, 100041, 500);
+      ctx.returnBody(null, 100041, 500)
     }
   }
 }
