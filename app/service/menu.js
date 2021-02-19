@@ -1,6 +1,10 @@
 'use strict'
-
 const Service = require('egg').Service
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
+
+
+
 
 class MenuService extends Service {
   // 查询某条数据
