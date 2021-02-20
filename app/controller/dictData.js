@@ -2,47 +2,32 @@
 
 const Controller = require('egg').Controller
 
-class MenuController extends Controller {
-  constructor(...arg) {
-    super(...arg)
-    this.serviceName = 'menu'
-  }
-
+class DictDataController extends Controller {
   // 查询
   async index() {
     const { ctx, service } = this
-    const result = await service.menu.findAllMenu()
+    // 查询参数
+    const query = {
+      limit: ctx.helper.parseInt(ctx.query.pageSize),
+      offset: ctx.helper.parseInt(ctx.query.pageNum),
+    }
+    const result = await service.dictData.findList(query)
     ctx.returnBody(result, 100010)
   }
 
   // 查询单个
   async show() {
-    console.log(this.serviceName + '.create')
     const { ctx, service } = this
     let validateResult = await ctx.checkValidate(ctx.params, 'base.show')
     if (!validateResult) return
     let id = ctx.helper.parseInt(ctx.params.id)
-    const result = await service.menu.findByPk(id)
+    const result = await service.dictData.findByPk(id)
     ctx.returnBody(result, 100010)
   }
-
-  // {
-  //   "parentId": 0,
-  //   "title": "undefined",
-  //   "icon": "undefined",
-  //   "menuType": "M",
-  //   "orderNum": 1,
-  //   "isFrame": "1",
-  //   "visible": "1",
-  //   "status": "1"
-  // }
 
   // 新增
   async create() {
     const { ctx, service } = this
-    console.log(ctx.request.body)
-    console.log(ctx.state.user)
-
     let validateResult = await ctx.checkValidate(
       ctx.request.body,
       this.serviceName + '.create'
@@ -51,7 +36,7 @@ class MenuController extends Controller {
     let query = ctx.request.body
     query.createdAt = new Date()
     query.createdBy = ctx.state.user.userName
-    const result = await service.menu.create(query)
+    const result = await service.dictData.create(query)
     if (result) {
       ctx.returnBody(null, 100020)
     } else {
@@ -71,7 +56,7 @@ class MenuController extends Controller {
     query.updatedAt = new Date()
     query.updatedBy = ctx.state.user.userName
     const id = this.ctx.helper.parseInt(ctx.params.id)
-    const result = await service.menu.update(query, {
+    const result = await service.dictData.update(query, {
       id,
     })
     if (result) {
@@ -87,7 +72,7 @@ class MenuController extends Controller {
     let validateResult = await ctx.checkValidate(ctx.params, 'base.destroy')
     if (!validateResult) return
     const ids = ctx.params.id.split(',')
-    const result = await service.menu.destroy(ids)
+    const result = await service.dictData.destroy(ids)
 
     if (result) {
       ctx.returnBody(null, 100040)
@@ -97,4 +82,4 @@ class MenuController extends Controller {
   }
 }
 
-module.exports = MenuController
+module.exports = DictDataController

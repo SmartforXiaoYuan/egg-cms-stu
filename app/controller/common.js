@@ -61,6 +61,7 @@ class CommonController extends Controller {
           }
         )
         ctx.state.user = result
+        console.log(ctx.state.user)
         ctx.returnBody({
           userInfo: result,
           token,

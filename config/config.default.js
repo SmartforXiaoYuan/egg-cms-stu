@@ -19,6 +19,7 @@ module.exports = (appInfo) => {
 
   config.middleware = [
     'errorHandler', // 全局错误处理
+    'jwt',
   ]
 
   // add your user config here
@@ -95,6 +96,16 @@ module.exports = (appInfo) => {
     secret: 'egg-api-jwt',
     expiresIn: 60 * 60 * 24, // 1天过期
   }
+
+  config.whiteList = [
+    '/',
+    `/api/login`,
+    `/api/logout`,
+    `/api/captcha`,
+    `/api/front/*`,
+    '/web/*',
+  ] // api 白名单
+
   return {
     ...config,
     ...userConfig,
