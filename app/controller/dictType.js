@@ -10,6 +10,9 @@ class DictTypeController extends Controller {
     const query = {
       limit: ctx.helper.parseInt(ctx.query.pageSize),
       offset: ctx.helper.parseInt(ctx.query.pageNum),
+      dictName: ctx.query.dictName,
+      dictType: ctx.query.dictType,
+      status: ctx.query.status,
     }
     const result = await service.dictType.findList(query)
     ctx.returnBody(result, 100010)

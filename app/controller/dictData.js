@@ -6,12 +6,21 @@ class DictDataController extends Controller {
   // 查询
   async index() {
     const { ctx, service } = this
+    const validateResult = await ctx.checkValidate(
+      ctx.query,
+      this.serviceName + '.index'
+    )
+    // 验证不通过时，阻止后面的代码执行
+    if (!validateResult) return
     // 查询参数
     const query = {
       limit: ctx.helper.parseInt(ctx.query.pageSize),
       offset: ctx.helper.parseInt(ctx.query.pageNum),
+      dictType: ctx.query.dictType,
+      dictLabel: ctx.query.dictLabel,
+      status: ctx.query.status,
     }
-    const result = await service.dictData.findList(query)
+    const result = await service.dictData.findList(query, [['dictSort', 'ASC']])
     ctx.returnBody(result, 100010)
   }
 

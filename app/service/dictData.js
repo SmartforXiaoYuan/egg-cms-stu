@@ -1,6 +1,8 @@
 'use strict'
 
 const Service = require('egg').Service
+const Sequelize = require('sequelize')
+const Op = Sequelize.Op
 
 class DictDataService extends Service {
   // 查询某条数据
@@ -11,7 +13,7 @@ class DictDataService extends Service {
   }
 
   // 查询, 传页码，分页返回，否则全部返回
-  async findList(query, order = [['createdAt', 'DESC']]) {
+  async findList(query, order = [['createdAt', 'ASC']]) {
     let obj = {
       where: {},
       order,
