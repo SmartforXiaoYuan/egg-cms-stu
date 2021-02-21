@@ -20,6 +20,7 @@ module.exports = (app) => {
   //http://localhost:7001/api/menu/1
   app.router.resources('dictType', '/api/dictType', controller.dictType)
   app.router.resources('dictData', '/api/dictData', controller.dictData)
+  app.router.resources('department', '/api/department', controller.department)
 
   router.post('/user/list', controller.user.list)
   router.post('/user', controller.user.ctreat)
