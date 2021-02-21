@@ -21,6 +21,9 @@ module.exports = (app) => {
   app.router.resources('dictType', '/api/dictType', controller.dictType)
   app.router.resources('dictData', '/api/dictData', controller.dictData)
   app.router.resources('department', '/api/department', controller.department)
+  app.router.resources('role', '/api/role', controller.role)
+
+
 
   router.post('/user/list', controller.user.list)
   router.post('/user', controller.user.ctreat)
