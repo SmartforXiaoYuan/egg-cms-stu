@@ -114,6 +114,7 @@ module.exports = (app) => {
       through: 'role_menu',
       foreignKey: 'menuId',
       as: 'role',
+      constraints: false
     })
   }
 

@@ -3,7 +3,7 @@
 const Controller = require('egg').Controller
 const fs = require('fs')
 const JWT = require('jsonwebtoken')
-// const { mkdirsSync } = require('../../utils/tools')
+// const { mkdirsSync } = require('../utils/tools')
 
 class CommonController extends Controller {
   async login() {

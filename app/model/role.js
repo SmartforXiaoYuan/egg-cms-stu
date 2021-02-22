@@ -78,11 +78,12 @@ module.exports = (app) => {
     // Role.belongsToMany(app.model.Menu, {
     //   through: 'role_menu2',
     // })
-
+    Role.belongsToMany(app.model.User, { through: 'user_role', as: 'users', constraints: false });
     Role.belongsToMany(app.model.Menu, {
       through: 'role_menu',
-      foreignKey: 'roleId',
-      as: 'menu',
+      // foreignKey: 'roleId',
+      as: 'menus',
+      constraints: false //不需要生成物理外键
     })
   }
 

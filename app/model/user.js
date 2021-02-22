@@ -95,15 +95,17 @@ module.exports = (app) => {
       timestamps: false,
     }
   )
-  // User.associate = function () {
-  //   User.belongsTo(app.model.Department, {
-  //     foreignKey: 'deptId',
-  //   })
-  //   User.belongsToMany(app.model.Role, {
-  //     through: 'user_role',
-  //     foreignKey: 'userId',
-  //     as: 'role',
-  //   })
-  // }
+  User.associate = function () {
+    User.belongsTo(app.model.Department, {
+      foreignKey: 'deptId',
+      constraints: false
+    })
+    User.belongsToMany(app.model.Role, {
+      through: 'user_role',
+      foreignKey: 'userId',
+      as: 'roles',
+      constraints: false //不需要生成物理外键
+    })
+  }
   return User
 }
