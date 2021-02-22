@@ -11,6 +11,11 @@ module.exports = (options, app) => {
     let whiteLists = app.config.whiteList.filter(
       (item) => item.lastIndexOf('/*') === -1
     )
+    let swaggerWhiteLists = app.config.whiteList.filter(
+      (item) => item.firstIndexOf('/swagger*') === -1
+    )
+    whiteLists.push(swaggerWhiteLists)
+
     if (
       !checkWhiteList(ctx, parentWhiteLists) &&
       !whiteLists.includes(ctx.request.path)

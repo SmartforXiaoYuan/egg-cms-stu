@@ -8,7 +8,8 @@ class UserController extends Controller {
     ctx.body = 'hi, egg'
   }
 
-  async ctreat() {
+  //swagger dome
+  async ctreat2() {
     /**
      * @summary 新增用户
      * @router post /user

@@ -23,10 +23,10 @@ module.exports = (app) => {
   app.router.resources('department', '/api/department', controller.department)
   app.router.resources('role', '/api/role', controller.role)
 
+  app.router.resources('user', '/api/user', controller.user)
 
-
-  router.post('/user/list', controller.user.list)
-  router.post('/user', controller.user.ctreat)
+  // router.post('/user/list', controller.user.list)
+  router.post('/user/cre2', controller.user.ctreat2) //测试swagger的
   router.post('/api/login', controller.common.login)
   router.get('/api/captcha', controller.common.captcha)
 }

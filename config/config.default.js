@@ -98,6 +98,7 @@ module.exports = (appInfo) => {
   }
 
   config.whiteList = [
+    '/swagger-ui.html',
     '/',
     `/api/login`,
     `/api/logout`,
