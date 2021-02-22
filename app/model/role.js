@@ -74,5 +74,19 @@ module.exports = (app) => {
     }
   )
 
+  Role.associate = function () {
+    // Role.belongsToMany(app.model.Menu, {
+    //   through: 'role_menu2',
+    // })
+
+    Role.belongsToMany(app.model.Menu, {
+      through: 'role_menu',
+      foreignKey: 'roleId',
+      as: 'menu',
+    })
+  }
+
   return Role
 }
+
+//through 将表 C 用作联结表,

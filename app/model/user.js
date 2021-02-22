@@ -3,59 +3,90 @@
  */
 var Sequelize = require('sequelize')
 module.exports = (app) => {
-  const { STRING, INTEGER } = app.Sequelize
+  const { STRING, INTEGER, DATE } = app.Sequelize
   const User = app.model.define(
     'user',
     {
-      id: { type: INTEGER, primaryKey: true, autoIncrement: true },
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: INTEGER,
+      },
+      deptId: {
+        allowNull: false,
+        type: INTEGER,
+        comment: '部门deptId',
+      },
       userName: {
         allowNull: false,
-        type: STRING(50),
+        unique: true,
+        type: STRING,
         comment: '用户名',
       },
       nickName: {
-        type: STRING(50),
-        allowNull: false,
+        type: STRING,
+        defaultValue: null,
         comment: '昵称',
       },
+      sex: {
+        type: STRING,
+        defaultValue: '1',
+        comment: '性别（0代表女 1代表男）',
+      },
       password: {
-        type: STRING(200),
         allowNull: false,
+        type: STRING,
         comment: '密码',
       },
-      phoneNum: {
-        type: STRING(50),
-        allowNull: false,
-        comment: '手机号',
+      avatar: {
+        allowNull: true,
+        type: STRING,
+        defaultValue: null,
+        comment: '头像',
       },
       email: {
-        type: STRING(50),
-        allowNull: false,
+        allowNull: true,
+        type: STRING,
         comment: '邮箱',
       },
+      mobile: {
+        allowNull: true,
+        type: STRING,
+        comment: '手机号',
+      },
       isDelete: {
-        type: INTEGER,
+        type: STRING,
         defaultValue: '0',
         comment: '删除标志（0代表存在 1代表删除）',
       },
+      status: {
+        type: STRING,
+        defaultValue: '1',
+        comment: '帐号状态（1正常 0停用）',
+      },
+      remark: {
+        type: STRING,
+        comment: '备注',
+      },
       createdAt: {
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.NOW,
+        allowNull: true,
+        type: DATE,
         comment: '创建时间',
       },
       createdBy: {
         allowNull: true,
-        type: STRING(50),
+        type: STRING,
         comment: '创建者',
       },
       updatedAt: {
         allowNull: true,
-        type: Sequelize.DATE,
+        type: DATE,
         comment: '更新时间',
       },
       updatedBy: {
         allowNull: true,
-        type: STRING(50),
+        type: STRING,
         comment: '更新者',
       },
     },
@@ -64,6 +95,15 @@ module.exports = (app) => {
       timestamps: false,
     }
   )
-
+  // User.associate = function () {
+  //   User.belongsTo(app.model.Department, {
+  //     foreignKey: 'deptId',
+  //   })
+  //   User.belongsToMany(app.model.Role, {
+  //     through: 'user_role',
+  //     foreignKey: 'userId',
+  //     as: 'role',
+  //   })
+  // }
   return User
 }

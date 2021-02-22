@@ -104,5 +104,18 @@ module.exports = (app) => {
     }
   )
 
+  Menu.prototype.associate = function () {
+    //不理解 prototype.associate和associate区别 先放着
+    // Menu.belongsToMany(app.model.Role, {
+    //   through: 'role_menu2',
+    // })
+
+    Menu.belongsToMany(app.model.Role, {
+      through: 'role_menu',
+      foreignKey: 'menuId',
+      as: 'role',
+    })
+  }
+
   return Menu
 }
