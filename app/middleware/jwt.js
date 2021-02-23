@@ -14,7 +14,8 @@ module.exports = (options, app) => {
 
     if (
       !checkWhiteList(ctx, parentWhiteLists) &&
-      !whiteLists.includes(ctx.request.path) && !ctx.request.path.startsWith('/swagger')
+      !whiteLists.includes(ctx.request.path) &&
+      !ctx.request.path.startsWith('/swagger')
     ) {
       // 拿到传会数据的header 中的token值
       const token = ctx.request.header.authorization
@@ -37,20 +38,22 @@ module.exports = (options, app) => {
           where: {
             id: decode.id,
           },
-          include: [{
-            model: ctx.model.Role,
-            as: 'roles'
-          }]
+          include: [
+            {
+              model: ctx.model.Role,
+              as: 'roles',
+            },
+          ],
         })
         if (user) {
           ctx.state.user = user
-          // let departments = await ctx.model.Departments.findAndCountAll();
-          // ctx.state.departmentsObj = handleTree(departments.rows, 'deptId');
+          let departments = await ctx.model.Department.findAndCountAll()
+          ctx.state.departmentsObj = handleTree(departments.rows, 'deptId')
           if (ctx.state.user.id === 1 || ctx.state.user.id === 2) {
             // 超级管理员权限
             ctx.state.permissions = ['*:*:*']
           } else {
-            let roleIds = ctx.state.user.roles.map((item) => item.id)   //ctx.state.user.roles 对应include中的as: 'roles'
+            let roleIds = ctx.state.user.roles.map((item) => item.id) //ctx.state.user.roles 对应include中的as: 'roles'
             let menus = await ctx.model['RoleMenu'].findAll({
               where: {
                 roleId: {

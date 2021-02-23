@@ -40,9 +40,6 @@ class MenuController extends Controller {
   // 新增
   async create() {
     const { ctx, service } = this
-    console.log(ctx.request.body)
-    console.log(ctx.state.user)
-
     let validateResult = await ctx.checkValidate(
       ctx.request.body,
       this.serviceName + '.create'

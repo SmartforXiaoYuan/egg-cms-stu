@@ -23,6 +23,7 @@ module.exports = (app) => {
   app.router.resources('department', '/api/department', controller.department)
   app.router.resources('role', '/api/role', controller.role)
 
+  router.get(`/api/system/getInfo`, controller.user.getInfo) // 获取用户信息
   app.router.resources('user', '/api/user', controller.user)
 
   // router.post('/user/list', controller.user.list)

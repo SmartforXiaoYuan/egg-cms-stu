@@ -1,20 +1,21 @@
 'use strict'
 
 const Service = require('egg').Service
-const Sequelize = require('sequelize');
-const Op = Sequelize.Op;
-const { getDeptWhere } = require("../utils/tools");
+const Sequelize = require('sequelize')
+const Op = Sequelize.Op
+const { getDeptWhere } = require('../utils/tools')
 
 class UserService extends Service {
-
   // 查询, 传页面，分页返回，否则全部返回
   async findList(query, order = [['createdAt', 'DESC']]) {
     let obj = {
       where: {},
       order,
-      include: [{
-        model: this.ctx.model.Department
-      }]
+      include: [
+        {
+          model: this.ctx.model.Department,
+        },
+      ],
     }
     if (query.offset) {
       query.limit = query.limit ? query.limit : 10
@@ -29,20 +30,33 @@ class UserService extends Service {
       if (key !== 'limit' && key !== 'offset') {
         if (key === 'deptId') {
           obj.where[key] = getDeptWhere(this.ctx, {
-            deptId: query.deptId
+            deptId: query.deptId,
           }).deptId
         } else {
           obj.where[key] = {
             // 模糊查询
-            [Op.like]: '%' + query[key] + '%'
+            [Op.like]: '%' + query[key] + '%',
           }
         }
       }
     }
-
-    return await this.ctx.model.User.findAndCountAll(obj);
+    console.log(obj)
+    return await this.ctx.model.User.findAndCountAll(obj)
   }
-
+  // 查询某条数据
+  async findOne(id) {
+    return await this.ctx.model.User.findOne({
+      where: {
+        id,
+      },
+      include: [
+        {
+          model: this.ctx.model.Role,
+          as: 'roles',
+        },
+      ],
+    })
+  }
 
   // 新增
   async create(query) {
@@ -82,20 +96,20 @@ class UserService extends Service {
   async update(query, id) {
     try {
       // 建立事务对象
-      let transaction = await this.ctx.model.transaction();
+      let transaction = await this.ctx.model.transaction()
 
       // 事务增操作
       await this.ctx.model.User.update(query, {
         where: {
-          id
+          id,
         },
-        transaction
-      });
+        transaction,
+      })
       await this.ctx.model.UserRole.destroy({
         where: {
-          userId: id
+          userId: id,
         },
-        transaction
+        transaction,
       })
       let roleIds = this.ctx.request.body['roleIds']
       let roleQuery = []
@@ -108,10 +122,10 @@ class UserService extends Service {
 
       // 事务批量增操作
       await this.ctx.model.UserRole.bulkCreate(roleQuery, {
-        transaction
-      });
+        transaction,
+      })
       // 提交事务
-      await transaction.commit();
+      await transaction.commit()
       return true
     } catch (error) {
       if (error.name === 'SequelizeUniqueConstraintError') {
@@ -126,32 +140,31 @@ class UserService extends Service {
   async destroy(ids) {
     try {
       // 建立事务对象
-      let transaction = await this.ctx.model.transaction();
+      let transaction = await this.ctx.model.transaction()
 
       await this.ctx.model.Users.destroy({
         where: {
           id: {
-            [Op.or]: ids
-          }
+            [Op.or]: ids,
+          },
         },
-        transaction
-      });
+        transaction,
+      })
       await this.ctx.model.UserRole.destroy({
         where: {
           userId: {
-            [Op.or]: ids
-          }
+            [Op.or]: ids,
+          },
         },
-        transaction
+        transaction,
       })
       // 提交事务
-      await transaction.commit();
+      await transaction.commit()
       return true
     } catch (error) {
       this.ctx.throw(500, '服务器错误')
     }
   }
-
 }
 
 module.exports = UserService
