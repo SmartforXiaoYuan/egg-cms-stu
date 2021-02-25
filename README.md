@@ -1,5 +1,9 @@
 # EGG-CMS-RBAC 系统
 
+# 演示地址
+
+http://1280.jiyulin.com:8081
+
 ## 实现一个 RBAC 系统
 
 首先要认识 egg 主要看下 目录结构和加载器
